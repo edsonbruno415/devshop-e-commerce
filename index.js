@@ -3,7 +3,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 const path = require("path");
 const bodyParser = require("body-parser");
-const db = require("knex")({
+const slug = require("./utils/slug");
+const dbConnection = require("knex")({
     client: "mysql2",
     connection: {
         host: "127.0.0.1",
@@ -13,40 +14,50 @@ const db = require("knex")({
     }
 });
 
-db.on("query", query => {
+dbConnection.on("query", query => {
     console.log("SQL method Query:", query);
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set("view engine","ejs");
-app.set("views", path.join(__dirname, "views"));
-app.use(express.static(path.join(__dirname,"public")));
+const db = require("./models/index")(dbConnection);
 
-app.get("/",async(req, res)=>{
-    const categories = await db.from("categories").select("*");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
+
+const categoriesWithSlug = (arrayCategories) => {
+    if (arrayCategories !== null) {
+        const categories = arrayCategories.map(cat => {
+            return { ...cat, categorySlug: slug(cat.category) };
+        });
+        return categories;
+    }else{
+        return arrayCategories;
+    }
+}
+
+app.get("/", async (req, res) => {
+    const categoriesDB = await db.categoriesAll();
+    const categories = categoriesWithSlug(categoriesDB);
     res.render("home", { categories });
 });
 
-app.get("/categorias/:id", async(req, res)=>{
-    const categories = await db.from("categories").select("*");
-    const products = await db.from("products").select("*").where("id", function(){
-        this
-            .from("categories_products")
-            .select("categories_products.product_id")
-            .whereRaw("categories_products.product_id = products.id")
-            .where("categories_products.category_id", req.params.id);
-    });
+app.get("/categorias/:id/:cat", async (req, res) => {
+    const { id, cat} = req.params;
+    const categoriesDB = await db.categoriesAll();
+    const categories = categoriesWithSlug(categoriesDB);
+    const products = await db.productsByCategoryId(id);
     res.render("category", {
-        categories, 
-        category: categories[req.params.id-1], 
+        categories,
+        category: categories[id-1],
         products
     });
 });
 
-app.listen(port,(err)=>{
-    if(err){
+app.listen(port, (err) => {
+    if (err) {
         console.log("application dont running because ", err);
-    }else{
+    } else {
         console.log("DevShop running on port", port);
     }
 });

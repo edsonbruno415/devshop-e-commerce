@@ -4,10 +4,10 @@
 	<div class="container clearfix">
 		<h2 class="title-page "><%- category.category %></h2>
 
-		<nav class="float-left">
+		<nav hidden class="float-left">
 			<ol class="breadcrumb text-white">
-				<li class="breadcrumb-item"><a href="#">Home</a></li>
-				<li class="breadcrumb-item"><a href="#">Library</a></li>
+				<li class="breadcrumb-item"><a href="/">Home</a></li>
+				<li class="breadcrumb-item"><a href="#"></a></li>
 				<li class="breadcrumb-item active" aria-current="page">Data</li>
 			</ol>
 		</nav>
@@ -20,7 +20,7 @@
 	<div class="container">
 
 		<div class="row">
-			<aside class="col-sm-3">
+			<aside hidden class="col-sm-3">
 
 				<div class="card card-filter">
 					<article class="card-group-item">
@@ -125,7 +125,7 @@
 
 
 			</aside> <!-- col.// -->
-			<main class="col-sm-9">
+			<main class="col-sm-12">
 
 
 				<% products.forEach( product => { %> 
@@ -133,7 +133,7 @@
 					<div class="card-body">
 						<div class="row">
 							<aside class="col-sm-3">
-								<div class="img-wrap"><img src="images/items/2.jpg"></div>
+								<div class="img-wrap"><img src="/images/items/2.jpg"></div>
 							</aside> <!-- col.// -->
 							<article class="col-sm-6">
 								<h4 class="title"><%- product.name %></h4>
