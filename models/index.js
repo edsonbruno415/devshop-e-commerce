@@ -1,10 +1,24 @@
-const dbMethods = (db) => {
+const dbConnection = require("knex")({
+    client: "mysql2",
+    connection: {
+        host: "127.0.0.1",
+        user: "root",
+        password: "",
+        database: "devshop"
+    }
+});
+
+dbConnection.on("query", query => {
+    console.log("SQL method Query:", query);
+});
+
+const dbMethods = (dbConnection) => {
     return {
-        categoriesAll: () => {
-            return db.from("categories").select("*");
+        getCategories: () => {
+            return dbConnection.from("categories").select("*");
         },
-        productsByCategoryId: (id) => {
-            return db.from("products").select("*").where("id", function () {
+        getProductsByCategoryId: (id) => {
+            return dbConnection.from("products").select("*").where("id", function () {
                 this
                     .from("categories_products")
                     .select("categories_products.product_id")
@@ -14,7 +28,7 @@ const dbMethods = (db) => {
         }
     }
 }
+const db = dbMethods(dbConnection);
 
-module.exports = dbMethods;
-
+module.exports = db;
 
