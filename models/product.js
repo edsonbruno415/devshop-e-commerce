@@ -8,6 +8,9 @@ const product = (dbConnection) => {
                     .whereRaw("categories_products.product_id = products.id")
                     .where("categories_products.category_id", id);
             });
+        },
+        getProductById: (id) => {
+            return dbConnection.from("products").select("*").where("id",id);
         }
     }
 }

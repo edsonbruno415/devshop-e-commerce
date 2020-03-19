@@ -7,11 +7,13 @@ const dbConnection = require("knex")({
         database: "devshop"
     }
 });
-
+//Showing database methods running on database
+/*
 dbConnection.on("query", query => {
     console.log("SQL method Query:", query);
 });
-
+*/
+//Database methods from models
 const category = require("./category")(dbConnection);
 const product = require("./product")(dbConnection);
 

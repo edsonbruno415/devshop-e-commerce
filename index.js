@@ -5,29 +5,28 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const slug = require("./utils/arrayWithSlug");
 const db = require("./models/index");
+const categories = require("./controllers/categories");
+const products = require("./controllers/products");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", async (req, res) => {
+app.use(async(req, res, next)=>{
     const categoriesDB = await db.getCategories();
     const categories = slug.categories(categoriesDB);
-    res.render("home", { categories });
+    res.locals.categories = categories; 
+    next();
 });
 
-app.get("/categorias/:id/:cat", async (req, res) => {
-    const { id, cat} = req.params;
-    const categoriesDB = await db.getCategories();
-    const categories = slug.categories(categoriesDB);
-    const products = await db.getProductsByCategoryId(id);
-    res.render("category", {
-        categories,
-        category: categories[id-1],
-        products
-    });
+app.get("/", async (req, res) => {
+    res.render("home");
 });
+
+app.get("/categorias/:id/:cat", categories.getCategory.bind(null, db));
+
+app.get("/produtos/:id/:prod", products.getProduct.bind(null, db));
 
 app.listen(port, (err) => {
     if (err) {
