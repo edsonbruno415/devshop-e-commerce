@@ -28,8 +28,9 @@ app.get("/categorias/:id/:cat", categories.getCategory.bind(null, db));
 
 app.get("/produtos", async(req, res) => {
     const products = await db.getProducts();
+    const productsWithSlug = slug.products(products);
     res.render("products",{
-        products
+        products: productsWithSlug
     });
 });
 
