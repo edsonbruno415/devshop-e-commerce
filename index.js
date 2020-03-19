@@ -5,8 +5,8 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const slug = require("./utils/arrayWithSlug");
 const db = require("./models/index");
-const categories = require("./controllers/categories");
 
+const categories = require("./routes/categories");
 const products = require("./routes/products");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,7 +25,7 @@ app.get("/", async (req, res) => {
     res.render("home");
 });
 
-app.get("/categorias/:id/:cat", categories.getCategory.bind(null, db));
+app.use("/categorias", categories(db));
 app.use("/produtos", products(db));
 
 app.listen(port, (err) => {
