@@ -13,10 +13,10 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(async(req, res, next)=>{
+app.use(async (req, res, next) => {
     const categoriesDB = await db.getCategories();
     const categories = slug.categories(categoriesDB);
-    res.locals.categories = categories; 
+    res.locals.categories = categories;
     next();
 });
 
@@ -25,6 +25,13 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/categorias/:id/:cat", categories.getCategory.bind(null, db));
+
+app.get("/produtos", async(req, res) => {
+    const products = await db.getProducts();
+    res.render("products",{
+        products
+    });
+});
 
 app.get("/produtos/:id/:prod", products.getProduct.bind(null, db));
 

@@ -11,6 +11,9 @@ const product = (dbConnection) => {
         },
         getProductById: (id) => {
             return dbConnection.from("products").select("*").where("id",id);
+        },
+        getProducts: () =>{
+            return dbConnection.from("products").select("*");
         }
     }
 }
