@@ -6,7 +6,8 @@ const bodyParser = require("body-parser");
 const slug = require("./utils/arrayWithSlug");
 const db = require("./models/index");
 const categories = require("./controllers/categories");
-const products = require("./controllers/products");
+
+const products = require("./routes/products");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -25,16 +26,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/categorias/:id/:cat", categories.getCategory.bind(null, db));
-
-app.get("/produtos", async(req, res) => {
-    const products = await db.getProducts();
-    const productsWithSlug = slug.products(products);
-    res.render("products",{
-        products: productsWithSlug
-    });
-});
-
-app.get("/produtos/:id/:prod", products.getProduct.bind(null, db));
+app.use("/produtos", products(db));
 
 app.listen(port, (err) => {
     if (err) {
