@@ -14,10 +14,12 @@ dbConnection.on("query", query => {
 //Database methods from models
 const category = require("./category")(dbConnection);
 const product = require("./product")(dbConnection);
+const user = require("./user")(dbConnection);
 
 const db = {
     ...category,
-    ...product
+    ...product,
+    ...user
 };
 
 module.exports = db;
