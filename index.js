@@ -8,6 +8,7 @@ const slug = require("./utils/arrayWithSlug");
 const db = require("./models/index");
 const routes = require("./routes/index");
 
+app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
