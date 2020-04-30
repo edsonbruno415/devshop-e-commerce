@@ -10,6 +10,7 @@ const init = (db) => {
     router.use("/categorias",categories(db));
     router.use("/produtos", products(db));
     router.post("/login", auth.login(db));
+    router.get("/logout", auth.logout );
     return router;
 }
 

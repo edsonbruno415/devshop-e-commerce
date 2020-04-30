@@ -26,20 +26,30 @@ const login = db => async (req, res) => {
 
     try {
         const user = await db.getUserByEmail(email);
-        console.log(user.length);
+
         if(user.length === 0){
             throw new Error("User is invalid!");
         }
         if (!checkPassword( password, user[0].password)) {
             throw new Error("This password is invalid!");
         }
-        res.send(user);
+
+        req.session.user = user[0];
+        res.redirect("/");
     }
     catch (err) {
         res.send('Error: '+ err);
     }
 }
 
+const logout = (req , res) => {
+    req.session.destroy(()=>{
+
+    });
+    res.redirect("/");
+}
+
 module.exports = {
-    login
+    login,
+    logout
 }

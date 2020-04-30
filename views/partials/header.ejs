@@ -83,6 +83,36 @@
 									</div>
 								</a>
 							</div> <!-- widget .// -->
+
+							<% if(user){ %>
+							<div class="widget-header dropdown">
+								<div class="icon-wrap icon-xs bg2 round text-secondary">
+									<i class="fa fa-user"></i>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<%- user.name %>
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item">Opcoes</a>
+									<% if(user.roles.indexOf("Admin") >= 0 ){ %>
+										<a class="dropdown-item" href="#">Painel Administrativo</a>
+									<% } %>
+
+									<% if(user.roles.indexOf("Financial") >= 0 ){ %>
+										<a class="dropdown-item" href="#">Painel Financeiro</a>
+									<% } %>
+
+									<% if(user.roles.indexOf("Customer") >= 0 ){ %>
+										<a class="dropdown-item" href="#">Meus Pedidos</a>
+									<% } %>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="/logout">Sair</a>
+								</div>
+							</div>
+							<% } else { %>
 							<div class="widget-header dropdown">
 								<a href="#" class="ml-3 icontext" data-toggle="dropdown" data-offset="20,10">
 									<div class="icon-wrap icon-xs bg2 round text-secondary"><i class="fa fa-user"></i>
@@ -96,11 +126,13 @@
 									<form class="px-4 py-3" method="POST" action="/login">
 										<div class="form-group">
 											<label>Email address</label>
-											<input name="email" type="email" class="form-control" placeholder="email@example.com">
+											<input name="email" type="email" class="form-control"
+												placeholder="email@example.com">
 										</div>
 										<div class="form-group">
 											<label>Password</label>
-											<input name="password" type="password" class="form-control" placeholder="Password">
+											<input name="password" type="password" class="form-control"
+												placeholder="Password">
 										</div>
 										<button type="submit" class="btn btn-primary">Sign in</button>
 									</form>
@@ -109,6 +141,7 @@
 									<a class="dropdown-item" href="#">Forgot password?</a>
 								</div> <!--  dropdown-menu .// -->
 							</div> <!-- widget  dropdown.// -->
+							<% } %>
 						</div> <!-- widgets-wrap.// -->
 					</div> <!-- col.// -->
 				</div> <!-- row.// -->
@@ -131,7 +164,8 @@
 						</li>
 						<% categories.forEach( category => { %>
 						<li class="nav-item">
-							<a class="nav-link" href="/categorias/<%-category.id%>/<%-category.categorySlug%>"><%- category.category %></a>
+							<a class="nav-link"
+								href="/categorias/<%-category.id%>/<%-category.categorySlug%>"><%- category.category %></a>
 						</li>
 						<% }) %>
 					</ul>

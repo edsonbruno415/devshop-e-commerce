@@ -7,9 +7,16 @@ const bodyParser = require("body-parser");
 const slug = require("./utils/arrayWithSlug");
 const db = require("./models/index");
 const routes = require("./routes/index");
+const session = require("express-session");
 
 app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: "MyDevShopRoles",
+    name: "sessionId"
+}));
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -18,6 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(async (req, res, next) => {
     const categoriesDB = await db.getCategories();
     const categories = slug.categories(categoriesDB);
+    res.locals.user = req.session.user;
     res.locals.categories = categories;
     next();
 });
