@@ -4,7 +4,7 @@ const categories = require("../../controllers/categories");
 const categoriesRouter = db => {
     const router = express.Router();
 
-    router.get("/", (req,res)=> res.send('admin/categorias'));
+    router.get("/", categories.adminGetCategories.bind(null,db));
 
     return router;
 }
