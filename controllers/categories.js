@@ -17,7 +17,16 @@ const adminGetCategories = async(db, req, res) =>{
     res.render("admin/categories/index",{ categories });
 }
 
+const adminCreateCategory = async(db, req, res) => {
+    if(req.method === "GET"){
+        res.render("admin/categories/create");
+    }else{
+        res.send(req.body);
+    }
+}
+
 module.exports = {
     getCategory,
-    adminGetCategories
+    adminGetCategories,
+    adminCreateCategory
 }

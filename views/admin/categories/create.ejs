@@ -2,15 +2,7 @@
 <!-- ========================= SECTION PAGETOP ========================= -->
 <section class="section-pagetop bg-primary">
 	<div class="container clearfix">
-		<h2 class="title-page ">Categorias</h2>
-
-		<nav class="float-left">
-			<ol class="breadcrumb text-white">
-				<li class="breadcrumb-item"><a href="/">Inicio</a></li>
-				<li class="breadcrumb-item"><a href="">Preço</a></li>
-				<li class="breadcrumb-item"><a href="">Avaliação</a></li>
-			</ol>
-		</nav>
+		<h2 class="title-page ">Nova Categoria</h2>
 	</div> <!-- container //  -->
 </section>
 <!-- ========================= SECTION INTRO END// ========================= -->
@@ -127,30 +119,26 @@
 
 			</aside> <!-- col.// -->
 			<main class="col-sm-12">
-				<div class="row">
-					<div class="col-sm-12">
-						<a href="/admin/categorias/criar" class="btn btn-primary mb-4">Criar Categoria</a>
-					</div>
-				</div>
-				<% categories.forEach( category => {  %>
-				<article class="card card-product">
-					<div class="card-body">
-						<div class="row">
-							<article class="col-sm-6">
-								<h4 class="title"><%= category.category %></h4>
-							</article> <!-- col.// -->
-							<aside class="col-sm-6 border-left">
-								<div class="action-wrap">
-									<p>
-										<a href="/admin/categorias/editar/<%= category.id %>" class="btn btn-primary"> Editar </a>
-										<a href="/admin/categorias/excluir/<%= category.id %>" class="btn btn-secondary"> Excluir </a>
-									</p>
-								</div> <!-- action-wrap.// -->
-							</aside> <!-- col.// -->
-						</div> <!-- row.// -->
-					</div> <!-- card-body .// -->
-				</article> <!-- card category .// -->
-				<% }) %>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                            <h4 class="card-title">Criar Categoria</h4>
+                            <form method="POST">
+                              <div class="form-group">
+                                  <label for="categoryName">Nome</label>
+                                    <input name="categoryName" id="categoryName"type="text" class="form-control" placeholder="Digite o nome da categoria">
+                              </div> <!-- form-group end.// -->
+                              <div class="form-group">
+                                  <label for="categoryDescription">Descricao</label>
+                                  <textarea name="categoryDescription" id="categoryDescription" class="form-control" rows="4" placeholder="Digite a descricao da categoria"></textarea>
+                              </div>
+                              <button class="btn btn-primary btn-block">Salvar Categoria</button>
+                            </form>
+                            </div> <!-- card-body.// -->
+                          </div>
+                    </div>
+                </div>
 			</main> <!-- col.// -->
 		</div>
 

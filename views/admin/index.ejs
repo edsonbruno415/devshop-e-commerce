@@ -1,8 +1,8 @@
-<%- include("../../partials/header.ejs") %>
+<%- include("../partials/header.ejs") %>
 <!-- ========================= SECTION PAGETOP ========================= -->
 <section class="section-pagetop bg-primary">
 	<div class="container clearfix">
-		<h2 class="title-page ">Categorias</h2>
+		<h2 class="title-page ">Painel Administrativo</h2>
 
 		<nav class="float-left">
 			<ol class="breadcrumb text-white">
@@ -127,30 +127,15 @@
 
 			</aside> <!-- col.// -->
 			<main class="col-sm-12">
-				<div class="row">
-					<div class="col-sm-12">
-						<a href="/admin/categorias/criar" class="btn btn-primary mb-4">Criar Categoria</a>
-					</div>
-				</div>
-				<% categories.forEach( category => {  %>
 				<article class="card card-product">
 					<div class="card-body">
 						<div class="row">
-							<article class="col-sm-6">
-								<h4 class="title"><%= category.category %></h4>
-							</article> <!-- col.// -->
-							<aside class="col-sm-6 border-left">
-								<div class="action-wrap">
-									<p>
-										<a href="/admin/categorias/editar/<%= category.id %>" class="btn btn-primary"> Editar </a>
-										<a href="/admin/categorias/excluir/<%= category.id %>" class="btn btn-secondary"> Excluir </a>
-									</p>
-								</div> <!-- action-wrap.// -->
-							</aside> <!-- col.// -->
+                            <div class="col-12">
+                            <a href="/admin/categorias" ><h4>Categorias</h4></a>
+                            </div>
 						</div> <!-- row.// -->
 					</div> <!-- card-body .// -->
 				</article> <!-- card category .// -->
-				<% }) %>
 			</main> <!-- col.// -->
 		</div>
 
@@ -172,4 +157,4 @@
 </section>
 <!-- ========================= SECTION  END// ========================= -->
 
-<%- include("../../partials/footer.ejs") %>
+<%- include("../partials/footer.ejs") %>
