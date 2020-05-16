@@ -8,9 +8,14 @@ const category = (dbConnection) => {
         return dbConnection.from("categories").select("*").where("id", id);
     }
 
+    function createCategory(category){
+        return dbConnection.from("categories").insert(category);
+    }
+
     return {
         getCategories,
-        getCategoryById
+        getCategoryById,
+        createCategory
     }
 }
 
