@@ -1,9 +1,9 @@
 const Joi = require('@hapi/joi');
 
-const schema = Joi.object().keys({
+const categorySchema = Joi.object({
   category: Joi.string()
     .max(245)
-    .min(4)
+    .min(5)
     .required()
   ,
   description: Joi.string()
@@ -11,4 +11,4 @@ const schema = Joi.object().keys({
     .required()
 });
 
-module.exports = schema;
+module.exports = categorySchema;

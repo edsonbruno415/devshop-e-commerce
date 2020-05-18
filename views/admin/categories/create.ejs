@@ -127,11 +127,18 @@
                             <form method="POST">
                               <div class="form-group">
                                   <label for="category">Nome</label>
-                                    <input name="category" id="category"type="text" class="form-control" placeholder="Digite o nome da categoria">
+									<input name="category" id="category"type="text" class="form-control <% if(errors.indexOf('category') >= 0){ %>is-invalid 								
+									<% } %>" placeholder="Digite o nome da categoria" value="<%= form.category %>">
+									<div class="invalid-feedback">
+										Por favor, informe a categoria.
+									</div>
                               </div> <!-- form-group end.// -->
                               <div class="form-group">
                                   <label for="description">Descricao</label>
-                                  <textarea name="description" id="description" class="form-control" rows="4" placeholder="Digite a descricao da categoria"></textarea>
+								  <textarea name="description" id="description" class="form-control <% if(errors.indexOf('description')>=0){ %> is-invalid <% } %>" rows="4" placeholder="Digite a descricao da categoria"><%= form.description %></textarea>
+								  <div class="invalid-feedback">
+									Por favor, informe a descricao.
+								</div>
                               </div>
                               <button class="btn btn-primary btn-block">Salvar Categoria</button>
                             </form>
