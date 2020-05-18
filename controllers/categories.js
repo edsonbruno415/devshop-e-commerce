@@ -1,4 +1,5 @@
 const slug = require("../utils/arrayWithSlug");
+const categoryValidation = require('../models/validation/category');
 
 const getCategory = async(db, req, res) => {
     const { id } = req.params;
@@ -21,9 +22,14 @@ const adminCreateCategory = async(db, req, res) => {
     if(req.method === "GET"){
         res.render("admin/categories/create");
     }else{
-        const category = req.body;
-        res.send(category);
-        await db.createCategory(category);
+        try{
+            const category = req.body;
+            await db.createCategory(category);
+            res.send('SUCESSS');
+        }catch(error){
+            res.send('ERRORRRR');
+        }
+       // await db.createCategory(category);
     }
 }
 
