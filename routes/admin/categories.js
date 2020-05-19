@@ -7,6 +7,8 @@ const categoriesRouter = db => {
     router.get("/", categories.adminGetCategories.bind(null, db));
     router.use("/criar", categories.adminCreateCategory.bind(null, db));
 
+    router.get("/excluir/:id", categories.adminRemoveCategory.bind(null, db));
+
     return router;
 }
 

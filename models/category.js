@@ -14,10 +14,20 @@ const category = (dbConnection) => {
             return dbConnection.from("categories").insert(category);
     }
 
+    function removeCategoryById(id){
+        return dbConnection.from("categories").where({ id }).del();
+    }
+
+    function updateCategory( id, category ){
+        return dbConnection.from("categories").where({ id }).update( category );
+    }
+
     return {
         getCategories,
         getCategoryById,
-        createCategory
+        createCategory,
+        removeCategoryById,
+        updateCategory
     }
 }
 
