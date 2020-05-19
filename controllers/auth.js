@@ -27,10 +27,10 @@ const login = db => async (req, res) => {
     try {
         const user = await db.getUserByEmail(email);
 
-        if(user.length === 0){
+        if (user.length === 0) {
             throw new Error("User is invalid!");
         }
-        if (!checkPassword( password, user[0].password)) {
+        if (!checkPassword(password, user[0].password)) {
             throw new Error("This password is invalid!");
         }
 
@@ -38,12 +38,12 @@ const login = db => async (req, res) => {
         res.redirect("/");
     }
     catch (err) {
-        res.send('Error: '+ err);
+        res.send('Error: ' + err);
     }
 }
 
-const logout = (req , res) => {
-    req.session.destroy(()=>{
+const logout = (req, res) => {
+    req.session.destroy(() => {
 
     });
     res.redirect("/");

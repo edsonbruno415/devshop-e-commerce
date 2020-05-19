@@ -1,5 +1,3 @@
-const schemaValidation = require('./validation/category');
-
 const category = (dbConnection) => {
 
     function getCategories() {
@@ -10,16 +8,16 @@ const category = (dbConnection) => {
         return dbConnection.from("categories").select("*").where("id", id);
     }
 
-    function createCategory(category){
-            return dbConnection.from("categories").insert(category);
+    function createCategory(category) {
+        return dbConnection.from("categories").insert(category);
     }
 
-    function removeCategoryById(id){
+    function removeCategoryById(id) {
         return dbConnection.from("categories").where({ id }).del();
     }
 
-    function updateCategory( id, category ){
-        return dbConnection.from("categories").where({ id }).update( category );
+    function updateCategory(id, category) {
+        return dbConnection.from("categories").where({ id }).update(category);
     }
 
     return {

@@ -15,11 +15,11 @@ const init = (db) => {
     });
     */
 
-    const categories = require("./categories");
+    const categories = require("./categories")(db);
     //const products = require("./products");
 
-    router.get("/", (req, res)=> res.render("admin/index"));
-    router.use("/categorias",categories(db));
+    router.get("/", (req, res) => res.render("admin/index"));
+    router.use("/categorias", categories);
     //router.use("/produtos", products(db));
 
     return router;
