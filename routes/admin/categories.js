@@ -9,6 +9,8 @@ const categoriesRouter = db => {
 
     router.get("/excluir/:id", categories.adminRemoveCategory.bind(null, db));
 
+    router.use("/editar/:id", categories.adminUpdateCategory.bind(null, db));
+
     return router;
 }
 
