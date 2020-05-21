@@ -188,20 +188,30 @@
 					</div> <!-- card-body .// -->
 				</article> <!-- card product .// -->
 				<% }) %>
-
+				<%= JSON.stringify(pagination); %>
+				<%= pagination.nextPage %>
+				<% if(!pagination.nextPage){ %>
+				alou
+				<% } %>
 				<nav aria-label="Mais produtos">
 					<ul class="pagination justify-content-center">
-						<% if(pagination.pages > 1){%>
+						<% if(pagination.nextPage || pagination.currentPage > 0) {%>
 						<% if(pagination.currentPage > 0 ){%>
 						<li class="page-item"><a class="page-link"
 								href="?sizePage=<%= pagination.sizePage %>&currentPage=<%= ( pagination.currentPage - 1)%>">Anterior</a>
 						</li>
 						<% } %>
-						<% for(let i = 0; i < pagination.pages; i ++){ %>
-						<li class="page-item <%if(pagination.currentPage === i){ %> active <% } %>"><a class="page-link"
-								href="?sizePage=<%= pagination.sizePage %>&currentPage=<%= i %>"><%= (i+1) %></a></li>
+						<% let indice = 0;%>
+						<% for(let i = 0; i <= (pagination.sizePage*pagination.currentPage); i += pagination.sizePage ) { %>
+						<li class="page-item <% if(indice === pagination.currentPage){ %>active<% } %>"><a class="page-link"
+								href="?sizePage=<%= pagination.sizePage %>&currentPage=<%= indice %>"><%= indice+1 %></a>
+						</li>
+						<% indice++; %>
 						<% } %>
-						<% if(pagination.currentPage < (pagination.pages - 1)){%>
+						<% if(pagination.nextPage){%>
+						<li class="page-item"><a class="page-link"
+								href="?sizePage=<%= pagination.sizePage %>&currentPage=<%= ( pagination.currentPage + 1)%>"><%= indice + 1%></a>
+						</li>
 						<li class="page-item"><a class="page-link"
 								href="?sizePage=<%= pagination.sizePage %>&currentPage=<%= ( pagination.currentPage + 1)%>">Proximo</a>
 						</li>

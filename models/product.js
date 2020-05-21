@@ -1,32 +1,27 @@
 const product = (dbConnection) => {
 
-    const getPagination = (params, registros) => {
+    const getPagination = (params, lastId) => {
         const sizePage = params.sizePage ? parseInt(params.sizePage) : 3;
         const currentPage = params.currentPage ? parseInt(params.currentPage) : 0 ;
-        const pages = Math.ceil(registros / sizePage);
-        console.log(sizePage, currentPage, pages, registros);
-
         return {
             sizePage,
-            currentPage,
-            pages
+            currentPage
         }
     }
     const getProductsByCategoryId = async (id, params) => {
-        const counter = await dbConnection.from("products").count("*",{ as: "total"}).whereIn("id", function () {
-            this
-                .from("categories_products")
-                .select("categories_products.product_id")
-                .where("categories_products.category_id", id);
-        });
-        const pagination = getPagination(params, counter[0].total);
+        const pagination = getPagination(params);
         const products = await dbConnection.from("products").select("*").whereIn("id", function () {
             this
                 .from("categories_products")
                 .select("categories_products.product_id")
                 .where("categories_products.category_id", id);
-        }).offset(pagination.sizePage*pagination.currentPage).limit(pagination.sizePage);
-
+        }).offset(pagination.sizePage*pagination.currentPage).limit(pagination.sizePage + 1);
+        if(products.length > pagination.sizePage){
+            products.pop();
+            pagination['nextPage'] = true;
+        }else{
+            pagination['nextPage'] = false;
+        }
         return {
             products,
             pagination
