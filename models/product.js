@@ -4,6 +4,7 @@ const product = (dbConnection) => {
         const sizePage = params.sizePage ? parseInt(params.sizePage) : 3;
         const currentPage = params.currentPage ? parseInt(params.currentPage) : 0 ;
         const pages = Math.ceil(registros / sizePage);
+        console.log(sizePage, currentPage, pages, registros);
 
         return {
             sizePage,
@@ -12,7 +13,12 @@ const product = (dbConnection) => {
         }
     }
     const getProductsByCategoryId = async (id, params) => {
-        const counter = await dbConnection.from("products").count("*",{ as: "total"});
+        const counter = await dbConnection.from("products").count("*",{ as: "total"}).whereIn("id", function () {
+            this
+                .from("categories_products")
+                .select("categories_products.product_id")
+                .where("categories_products.category_id", id);
+        });
         const pagination = getPagination(params, counter[0].total);
         const products = await dbConnection.from("products").select("*").whereIn("id", function () {
             this

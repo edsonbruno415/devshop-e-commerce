@@ -128,7 +128,7 @@
 			<main class="col-sm-12">
 
 
-				<% products.forEach( product => { %> 
+				<% products.forEach( product => { %>
 				<article class="card card-product">
 					<div class="card-body">
 						<div class="row">
@@ -178,7 +178,8 @@
 									<br>
 									<p>
 										<a href="#" class="btn btn-primary"> Comprar </a>
-										<a href="/produtos/<%- product.id %>/<%- product.slug %>" class="btn btn-secondary"> Detalhes </a>
+										<a href="/produtos/<%- product.id %>/<%- product.slug %>"
+											class="btn btn-secondary"> Detalhes </a>
 									</p>
 									<a href="#"><i class="fa fa-heart"></i> Adicionar aos favoritos </a>
 								</div> <!-- action-wrap.// -->
@@ -187,7 +188,25 @@
 					</div> <!-- card-body .// -->
 				</article> <!-- card product .// -->
 				<% }) %>
-				
+
+				<nav aria-label="Mais produtos">
+					<ul class="pagination justify-content-center">
+						<% if(pagination.currentPage > 0 ){%>
+						<li class="page-item"><a class="page-link"
+								href="?sizePage=<%= pagination.sizePage %>&currentPage=<%= ( pagination.currentPage - 1)%>">Anterior</a>
+						</li>
+						<% } %>
+						<% for(let i = 0; i < pagination.pages; i ++){ %>
+						<li class="page-item <%if(pagination.currentPage === i){ %> active <% } %>"><a class="page-link"
+								href="?sizePage=<%= pagination.sizePage %>&currentPage=<%= i %>"><%= (i+1) %></a></li>
+						<% } %>
+						<% if(pagination.currentPage < (pagination.pages - 1)){%>
+						<li class="page-item"><a class="page-link"
+								href="?sizePage=<%= pagination.sizePage %>&currentPage=<%= ( pagination.currentPage + 1)%>">Proximo</a>
+						</li>
+						<% } %>
+					</ul>
+				</nav>
 			</main> <!-- col.// -->
 		</div>
 
