@@ -6,12 +6,13 @@ const init = db => {
 
     const getCategory = async (req, res) => {
         const { id } = req.params;
-        const productsDB = await db.getProductsByCategoryId(id);
-        const products = slug.products(productsDB);
+        const data = await db.getProductsByCategoryId(id, req.query);
+        data.products = slug.products(data.products);
         const category = await db.getCategoryById(id);
         res.render("category", {
             category: category[0],
-            products
+            products: data.products,
+            pagination: data.pagination
         });
     }
 
