@@ -1,15 +1,18 @@
 const User = db => {
 
-    function getUserByEmail(email) {
-        return db.from("users").select("*").where("email", email).limit(1);
+    const getUserByEmail = async (email) => {
+        const user = await db.from("users").select("*").where("email", email).limit(1);
+        return user;
     }
 
-    function getUsersCount() {
-        return db.from("users").count("id as total");
+    const getUsersCount = async () => {
+        const totalUsers = await db.from("users").count("id as total");
+        return totalUsers;
     }
 
-    function insertUser(user) {
-        return db.from("users").insert(user);
+    const insertUser = async (user) => {
+        const result = await db.from("users").insert(user);
+        return result;
     }
 
     return {

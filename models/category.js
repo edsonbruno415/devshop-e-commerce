@@ -1,23 +1,28 @@
 const category = (dbConnection) => {
 
-    function getCategories() {
-        return dbConnection.from("categories").select("*");
+    const getCategories = async () => {
+        const categories = await dbConnection.from("categories").select("*");
+        return categories;
     }
 
-    function getCategoryById(id) {
-        return dbConnection.from("categories").select("*").where("id", id);
+    const getCategoryById = async (id) => {
+        const category = await dbConnection.from("categories").select("*").where("id", id);
+        return category;
     }
 
-    function createCategory(category) {
-        return dbConnection.from("categories").insert(category);
+    const createCategory = async (category) => {
+        const result = await dbConnection.from("categories").insert(category);
+        return result;
     }
 
-    function removeCategoryById(id) {
-        return dbConnection.from("categories").where({ id }).del();
+    const removeCategoryById = async (id) => {
+        const result = await dbConnection.from("categories").where({ id }).del();
+        return result;
     }
 
-    function updateCategory(id, category) {
-        return dbConnection.from("categories").where({ id }).update(category);
+    const updateCategory = async (id, category) => {
+        const result = await dbConnection.from("categories").where({ id }).update(category);
+        return result;
     }
 
     return {

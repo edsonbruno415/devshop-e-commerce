@@ -17,7 +17,7 @@ const init = db => {
             products: productsWithSlug
         });
     }
-    
+
     return {
         getProduct,
         getProducts

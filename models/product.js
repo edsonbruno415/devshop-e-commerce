@@ -1,21 +1,24 @@
 const product = (dbConnection) => {
 
-    function getProductsByCategoryId(id){
-        return dbConnection.from("products").select("*").where("id", function () {
+    const getProductsByCategoryId = async (id) => {
+        const products = await dbConnection.from("products").select("*").whereIn("id", function () {
             this
                 .from("categories_products")
                 .select("categories_products.product_id")
-                .whereRaw("categories_products.product_id = products.id")
                 .where("categories_products.category_id", id);
         });
+
+        return products;
     }
 
-    function getProducts(){
-        return dbConnection.from("products").select("*");
+    const getProducts = async () => {
+        const products = await dbConnection.from("products").select("*");
+        return products;
     }
 
-    function getProductById(id){
-        return dbConnection.from("products").select("*").where("id",id);
+    const getProductById = async (id) => {
+        const product = await dbConnection.from("products").select("*").where("id", id);
+        return product;
     }
 
     return {
